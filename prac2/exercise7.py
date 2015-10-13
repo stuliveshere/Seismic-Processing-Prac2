@@ -11,24 +11,18 @@ import pylab
 #-----------------------------------------------------------------------
 
 def _lmo_calc(aoffset, velocity):
-        t0 = None #you might need to put something here
+        t0 = -1.0*aoffset/velocity
         return t0
         
 @io
 def lmo(dataset, **kwargs):
-        for index, trace in enumerate(dataset):
-                aoffset = np.abs(trace['offset']).astype(np.float)
-                ns = trace['ns']
-                dt = trace['dt'] * 1e-6
-                tx = np.linspace(dt, dt*ns, ns)
-                #calculate time shift
+        offsets = np.unique(dataset['offset'])
+        for offset in offsets:
+                aoffset = np.abs(offset)
                 shift = _lmo_calc(aoffset, kwargs['lmo'])
-                #turn into samples
                 shift  = (shift*1000).astype(np.int)
-                #roll
-                result = np.roll(trace['trace'], shift)
-                dataset[index]['trace'] *= 0
-                dataset[index]['trace'] += result
+                inds= [dataset['offset'] == offset]
+                dataset['trace'][inds] =  np.roll(dataset['trace'][inds], shift, axis=-1) #results[inds]
         return dataset
 
 #-----------------------------------------------------------------------
@@ -36,15 +30,17 @@ def lmo(dataset, **kwargs):
 #-----------------------------------------------------------------------
 
 if __name__ == "__main__":
-        workspace, params = initialise('cdp201.su')
-
-        params['lmo'] =None
-        toolbox.agc(workspace, None, None)
+        workspace, params = initialise('cdp500.su')
+        params['primary'] = 'cdp'
+        params['secondary'] = 'offset'
+        params['lmo'] =1000.0
+        toolbox.agc(workspace, None, **params)
         lmo(workspace, None, **params)
-        workspace['trace'][:,None:None] *= 0
-        params['lmo'] =None
+        workspace['trace'][:,:30] *= 0
+        workspace['trace'][:,1850:] *= 0
+        params['lmo'] =-1000.0
         lmo(workspace, None, **params)
         
-        toolbox.display(workspace, None, None)
+        toolbox.display(workspace, None, **params)
         pylab.show()
 

@@ -1,12 +1,13 @@
-#import su file
+#import su files from prac1
 #view the gathers to make sure 
 #they imported properly
 
 from toolbox import io
 import toolbox
 import numpy as np
+import os
 import matplotlib.pyplot as pylab
-
+import pprint
 
 
 #-----------------------------------------------------------------------
@@ -15,19 +16,25 @@ import matplotlib.pyplot as pylab
 
 def initialise(file):
         #intialise empty parameter dictionary
-
-        kwargs = None #you need to fill this in
-        
+        #kwargs stands for keyword arguments
+        kwargs = {}
         #load file
-        dataset = None #and this
+        dataset = toolbox.read(file)
         
         #allocate stuff
-        dataset['cdp'] =  None #and this
-        kwargs['ns'] = None #and this
-        kwargs['dt'] =None #and this
-        
+        #~ 
+        ns = kwargs['ns'] = dataset['ns'][0]
+        dt = kwargs['dt'] = dataset['dt'][0]/1e6
+                       
         #also add the time vector - it's useful later
-        kwargs['times'] = np.linspace(0.001, 1.0, 1000) #i'll give you this one
+        kwargs['times'] = np.linspace(dt, ns*dt, ns*dt*1000)
+        
+        dataset['trace'] /= np.amax(dataset['trace'])
+        kwargs['primary'] = 'sx'
+        kwargs['secondary'] = 'gx'
+        kwargs['step'] = 1
+        
+        toolbox.scan(dataset)
         return dataset, kwargs
         
         
@@ -37,25 +44,10 @@ def initialise(file):
 
 if __name__ == "__main__":
         #intialise workspace and parameter dictionary
-        workspace, params = None
+        workspace, params = initialise('cleaned.su')
         
-        #the scan tool scans the file headers for non-zero values
-        toolbox.scan(workspace)
-        
-        #the scroll tool allows you to skip through an entire volume, but
-        #you have to define the sort keys, and step size
-        params['primary'] = None
-        params['secondary'] = None
-        params['step'] = None
-        
-        #the scroll tool is like the display tool, but
-        #you can use the left and right arrows to
-        #scroll through a volume
-        toolbox.scroll(workspace, None, **params)
-        
-        #the viewing tools have been changed so that 
-        #you can view more than one thing at once.
-        #but you need to put this at the end.
+        #view the dataset
+        toolbox.display(workspace, None, **params)
         pylab.show()
         
         

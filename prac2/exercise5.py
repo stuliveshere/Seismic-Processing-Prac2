@@ -16,7 +16,7 @@ def _stack_gather(gather):
         '''stacks a single gather into a trace.
         uses header of first trace. normalises
         by the number of traces'''
-        gather['trace'][0] = None #you should probably put something here
+        gather['trace'][0] = np.mean(gather['trace'], axis=-2)
         return gather[0]
 
 @io	
@@ -32,15 +32,17 @@ def stack(dataset, **kwargs):
         
 if __name__ == '__main__':
         #initialise your test cdp first
-        workspace, params = None
+        workspace, params = initialise('cleaned.su')
+        params['primary'] = None
+        params['secondary'] = 'cdp'
         
         #first do the true amplitude recovery
-        params['gamma'] = None
+        params['gamma'] = 3
         tar(workspace, None, **params)
         
         #then apply NMO	
-        params['smute'] = None
-        params['vels'] = toolbox.build_vels([None], [None])
+        params['smute'] = 100.0
+        params['vels'] = toolbox.build_vels([0.5], [1500], ns=params['ns'])
         nmo(workspace, None, **params)
         
         #we will apply a pre-stack agc
@@ -52,7 +54,6 @@ if __name__ == '__main__':
         #display it
         #params['clip'] = 1e-5
         toolbox.display(section, None, **params)
-        toolbox.cp(section, 'brute-stack.su', **params)
         
         pylab.show()
         

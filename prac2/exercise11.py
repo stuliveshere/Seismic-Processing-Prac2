@@ -9,6 +9,8 @@ from exercise3 import tar
 from exercise4 import nmo
 from exercise5 import stack
 from exercise7 import lmo
+from exercise9 import trace_mix
+from exercise10 import fk
 
 
 #-----------------------------------------------------------------------
@@ -25,7 +27,7 @@ None
 if __name__ == "__main__":
         #intialise workspace and parameter dictionary
         print 'initialising'
-        workspace, params = initialise('cleaned.su')
+        workspace, params = initialise('survey.su')
 
   
         
@@ -44,6 +46,11 @@ if __name__ == "__main__":
         params['lmo'] = -1000.0
         lmo(workspace, None, **params)
         
+        #~ #apply fk
+        #~ print "applying fk"
+        #~ params['lmo'] =500.0
+        #~ fk(workspace, None, **params)
+        
         #apply our NMO
         print "applying nmo"
         params['smute'] = 30
@@ -52,9 +59,14 @@ if __name__ == "__main__":
         params['vels'] = toolbox.build_vels(t, v, ns=params['ns'])
         nmo(workspace, None, **params)
         
-        #~ #apply AGC
+        #apply AGC
         toolbox.agc(workspace, None, **params)
-        #~ #stack
+        
+        #apply trace mix
+        params['mix'] = 10
+        trace_mix(workspace, None, **params)
+        
+        #stack
         print "stacking"
         stack(workspace, 'stack1.su', **params)
         
