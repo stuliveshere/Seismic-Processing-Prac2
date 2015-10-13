@@ -13,8 +13,7 @@ import sys
 
 def _nmo_calc(tx, vels, offset):
         '''calculates the zero offset time'''
-        t0 = np.sqrt(tx*tx - (offset*offset)/(vels*vels))
-        return t0
+        pass
         
 @io
 def nmo(dataset, **kwargs):
@@ -47,16 +46,13 @@ def nmo(dataset, **kwargs):
 
 if __name__ == "__main__":
         #intialise dataset and parameter dictionary
-        dataset, params = initialise('cdp500.su')
-        params['primary'] = 'cdp'
-        params['secondary'] = 'offset'
-        
-        #set stretch mute and vels
-        params['smute'] = 100.0
-        params['vels'] = toolbox.build_vels([0.5], [800.0], ns = params['ns'])
-        dataset = nmo(dataset, None, **params)
 
-        toolbox.display(dataset, None, **params)
-        pylab.show()
+        #set stretch mute and vels
+        params['smute'] = 0
+        params['vels'] = toolbox.build_vels([0.5], [1.0], ns = params['ns'])
+
+        #apply nmo
+        
+        #display
 
 

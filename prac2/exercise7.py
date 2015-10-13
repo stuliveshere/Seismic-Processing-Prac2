@@ -11,8 +11,8 @@ import pylab
 #-----------------------------------------------------------------------
 
 def _lmo_calc(aoffset, velocity):
-        t0 = -1.0*aoffset/velocity
-        return t0
+        '''function to calculate the timeshift
+        at a given offset'''
         
 @io
 def lmo(dataset, **kwargs):
@@ -30,17 +30,21 @@ def lmo(dataset, **kwargs):
 #-----------------------------------------------------------------------
 
 if __name__ == "__main__":
-        workspace, params = initialise('cdp500.su')
+        #initialise dataset 
+        
+        #set some parameters
         params['primary'] = 'cdp'
         params['secondary'] = 'offset'
-        params['lmo'] =1000.0
-        toolbox.agc(workspace, None, **params)
-        lmo(workspace, None, **params)
-        workspace['trace'][:,:30] *= 0
-        workspace['trace'][:,1850:] *= 0
-        params['lmo'] =-1000.0
-        lmo(workspace, None, **params)
+        params['lmo'] = 0.0
         
-        toolbox.display(workspace, None, **params)
-        pylab.show()
+        #apply agc
+        
+        #apply lmo
+        
+        #zero out the bits we dont want
+
+        #reverse and apply LMO
+
+       #display 
+
 

@@ -42,23 +42,31 @@ def semb(workspace,**kwargs):
 #-----------------------------------------------------------------------
 
 if __name__ == "__main__":
-        workspace, params = initialise('cdp500.su')
-        velocities = np.arange(500, 4000, 100)
+        #initialise dataset
+        
+        #build list of velocities to stack
+        velocities = np.arange(10, 4e6, 10)
+        
+        #set some parameters
         params['velocities'] = velocities
         params['smute'] =30
         params['primary'] = 'cdp'
         params['secondary'] = 'offset'
-        #~ toolbox.agc(workspace, None, None)
-        #~ semb(workspace, **params)
-        v = [1000, 1510,3000]
-        t = [0.214, 1.03, 1.71]
-        params['vels'] = toolbox.build_vels(t, v, ns=params['ns'])
-        nmo(workspace, None, **params)
-        #~ 
-        toolbox.display(workspace, None, **params)
-
         
-        pylab.show()
+        #agc might help
+        #~ toolbox.agc(workspace, None, None)
+        
+        #run the semblance
+        #~ semb(workspace, **params)
+        
+        #pick your times and velocities
+        v = []
+        t = []
+        params['vels'] = toolbox.build_vels(t, v, ns=params['ns'])
+        
+        #run the nmo to check
+        
+        #display
         
         
         

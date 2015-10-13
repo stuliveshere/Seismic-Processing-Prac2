@@ -21,10 +21,11 @@ def tar(data, **kwargs):
         t = kwargs['times']
         
         #calculate the correction coeffieicnt
-        r  = np.exp(gamma * t)
+
         
         #applyt the correction to the data
-        data['trace'] *= r
+
+
         return data
 
         
@@ -34,17 +35,17 @@ def tar(data, **kwargs):
 
 if __name__ == "__main__":
         #intialise dataset and parameter dictionary
-        dataset, params = initialise('cdp500.su')
-        params['primary'] = 'cdp'
-        params['secondary'] = 'offset'
+
 
         #set the value of gamma you want to test here
-        params['gamma'] = 3
+        params['gamma'] = 0
+        
         #and apply
         tar(dataset, None, **params)
         
+        #and display
+        
         toolbox.display(dataset, None, **params)
-        toolbox.cp(dataset, "tar.su", **params)
         pylab.show()
         
         

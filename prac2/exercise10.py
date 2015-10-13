@@ -43,13 +43,13 @@ def fk(dataset, **kwargs):
 if __name__ == "__main__":
         #intialise workspace and parameter dictionary
         print 'initialising'
-        workspace, params = initialise('survey.su')
-        workspace = workspace[workspace['sx'] == 500]
+
+        #extract out one shot for testing
         
+        
+        #set filter velocity
         params['lmo'] = 3000.0
-        fk = fk(workspace, None, **params)
         
-        #~ 
-        #~ params['primary'] = None
-        toolbox.display(workspace, None, **params)
-        pylab.show()
+        #display
+        params['primary'] = None
+

@@ -5,10 +5,7 @@
 from toolbox import io
 import toolbox
 import numpy as np
-import os
-import matplotlib.pyplot as pylab
-import pprint
-
+import pylab
 
 #-----------------------------------------------------------------------
 #              useful functions
@@ -22,7 +19,6 @@ def initialise(file):
         dataset = toolbox.read(file)
         
         #allocate stuff
-        #~ 
         ns = kwargs['ns'] = dataset['ns'][0]
         dt = kwargs['dt'] = dataset['dt'][0]/1e6
                        
@@ -44,11 +40,9 @@ def initialise(file):
 
 if __name__ == "__main__":
         #intialise workspace and parameter dictionary
-        workspace, params = initialise('cleaned.su')
         
         #view the dataset
-        toolbox.display(workspace, None, **params)
-        pylab.show()
+
         
         
         

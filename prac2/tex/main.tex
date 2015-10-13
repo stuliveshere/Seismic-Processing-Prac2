@@ -1,9 +1,7 @@
 \begin{document}
 
 \maketitle % Insert the title, author and date
-This is the second of two pracs on seismic data processing.  In this prac we will be processing the dataset generated in prac 1.  
-\par~\\
-If you do not have the dataset from prac 1 is it available for download at \textbf{http://goo.gl/YuZgE9}
+This is the second of two pracs on seismic data processing.  In this prac we will be processing a supplied synthetic dataset.
 \par~\\
 As with prac 1 code templates have been provided. The prac can be downloaded from  \\ \textbf{https://github.com/stuliveshere/Seismic-Processing-Prac2}
 
@@ -37,7 +35,7 @@ The final image quality is influenced by the accuracy of the seismic velocities 
 \par~\\
 In this prac you will be picking your own velocities and selecting your own processing parameters.  You will be expected to test a range of parameters and discuss why you chose those parameters in your report.  
 \subsection*{Exercise 1: Load data and perform QC}
-In this exercise we will create an initialization routine which will load our dataset into numpy, and set up some initial parameters. We will then have a look at some raw shot gathers to ensure the data is loaded correctly (QC).
+In this exercise we will have a look at some raw shot gathers to ensure the data is loaded correctly (QC).
 \subsection*{Exercise 2: Sort into CMPs}
 CMP gathers collect all traces which pass through the same CMP into a single gather (collection of traces).  CMP gathers are generally used for velocity analysis and stacking. The number of traces in a CMP gather is referred to as the fold.  
 \par~\\
@@ -88,7 +86,7 @@ Write a function which will stack any gather given to it.  Note this can be done
 \par~\\
 \emph{An even bigger hint: think about the axis you want to use numpy.mean() along}
 \par~\\
-Once you have stacking working, you are ready to do a field stack.  Initialise the entire seismic volume, apply TAR, NMO, and then stack.  Ask the tutors to check your code before you run it - running the NMO will take a few minutes. Try it with and without pre-stack AGC. What are some of the problems with the stack? What is the large feature above the coals?
+Once you have stacking working, you are ready to do a field stack.  Initialise the entire seismic volume, apply TAR, NMO, and then stack.  Try it with and without pre-stack AGC. What are some of the problems with the stack? What is the large feature above the coals?
   
 
 \subsection*{Exercise 6: First Velocity Analysis}
@@ -130,8 +128,6 @@ You now have all the components to generate a minimally processed stack with pic
 \item view
 \end{enumerate}
 \par~\\
-Make sure you have used all your parameters correctly from previous exercises - you dont want to have to re-run your code.  The tutors will check your code before you start.  You will also want to output the stack as a file, so that you dont have to re-run your code for the next exercise.
-\par~\\
 Compare your first velocity stack to the brute stack we generated earlier. What are the main differences?  Discuss why we applied the LMO before the NMO.
 
 \subsection*{Exercise 9: Post-stack noise attenuation}
@@ -141,17 +137,22 @@ The process we are going to use is sometimes referred to as trace mixing. This c
 \par~\\
 \emph{Extra marks: perform the trace mixing pre-stack.  What are the pros and cons of a pre-stack trace mix?}
 
+\subsection*{Exercise 10: FK filter}
+An FK filter (experimental) has been written for you. Experiment with velocities to try and find one which attenuates dipping events but preserves reflections.
 
-\newpage
-\lstinputlisting{../exercise1.py}
-\lstinputlisting{../exercise2.py}
-\lstinputlisting{../exercise3.py}
-\lstinputlisting{../exercise4.py}
-\lstinputlisting{../exercise5.py}
-\lstinputlisting{../exercise6.py}
-\lstinputlisting{../exercise7.py}
-\lstinputlisting{../exercise8.py}
-\lstinputlisting{../exercise9.py}
+\subsection*{Exercise 11: Final Stack}
+Re-stack the data using the FK filter designed in exercise 10.
+
+%\newpage
+%\lstinputlisting{../exercise1.py}
+%\lstinputlisting{../exercise2.py}
+%\lstinputlisting{../exercise3.py}
+%\lstinputlisting{../exercise4.py}
+%\lstinputlisting{../exercise5.py}
+%\lstinputlisting{../exercise6.py}
+%\lstinputlisting{../exercise7.py}
+%\lstinputlisting{../exercise8.py}
+%\lstinputlisting{../exercise9.py}
 
 
 \end{document}

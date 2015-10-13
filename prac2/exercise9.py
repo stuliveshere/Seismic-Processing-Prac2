@@ -31,11 +31,15 @@ def trace_mix(dataset, **kwargs):
 
 if __name__ == "__main__":
         #intialise workspace and parameter dictionary
-        workspace, params = initialise('stack1.su')
+
+        #set some parameters
         params['mix'] = 10
-        trace_mix(workspace, None, **params)
-        toolbox.display(workspace, None, **params)
-        pylab.show()
+        
+        #apply trace mix
+
+        
+        #display
+
         
 
         

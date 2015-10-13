@@ -27,54 +27,38 @@ None
 if __name__ == "__main__":
         #intialise workspace and parameter dictionary
         print 'initialising'
-        workspace, params = initialise('survey.su')
 
   
         
         #set our TAR
         print "applying tar"
-        params['gamma'] = 3
-        tar(workspace, None, **params)
+
         
        
         #apply LMO
         print "applying lmo"
-        params['lmo'] =1000.0
-        lmo(workspace, None, **params)
-        workspace['trace'][:,:30] *= 0
-        workspace['trace'][:,1850:] *= 0
-        params['lmo'] = -1000.0
-        lmo(workspace, None, **params)
+
         
-        #~ #apply fk
-        #~ print "applying fk"
-        #~ params['lmo'] =500.0
-        #~ fk(workspace, None, **params)
+        #apply fk
+        print "applying fk"
+
         
         #apply our NMO
         print "applying nmo"
-        params['smute'] = 30
-        v = [1000, 1510,3000]
-        t = [0.214, 1.03, 1.71]
-        params['vels'] = toolbox.build_vels(t, v, ns=params['ns'])
-        nmo(workspace, None, **params)
+
         
         #apply AGC
-        toolbox.agc(workspace, None, **params)
+        print "applying AGC"
         
         #apply trace mix
-        params['mix'] = 10
-        trace_mix(workspace, None, **params)
+        print "applying trace mix"
         
         #stack
         print "stacking"
-        stack(workspace, 'stack1.su', **params)
+
         
         #view
-        params['primary'] = None
-        toolbox.display('stack1.su', None, **params)
-        
-        pylab.show()
+
         
         
 
